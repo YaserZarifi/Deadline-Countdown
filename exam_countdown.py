@@ -46,18 +46,29 @@ def add_to_startup(file_path=None, app_name="DeadlineApp"):
         reg.SetValueEx(registry_key, app_name, 0, reg.REG_SZ, file_path)
 
 
-def get_resource_path(relative_path):
-    try:
-        # When bundled by PyInstaller
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
 
-    return os.path.join(base_path, relative_path)
+def get_persistent_path(filename="deadlines.csv"):
+    import os
+
+    # Get app data directory and create it if it doesn't exist
+    appdata_dir = os.path.join(os.getenv("APPDATA"), "DeadlineApp")
+    os.makedirs(appdata_dir, exist_ok=True)
+
+    # Full path to the file
+    file_path = os.path.join(appdata_dir, filename)
+
+    # If the file doesn't exist, create it with headers
+    if not os.path.exists(file_path):
+        with open(file_path, 'w', encoding='utf-8', newline='') as f:
+            f.write("title,date\n")
+
+    return file_path
+
+
 
 
 def adjust_root_height():
-    deadlines = load_deadlines(get_resource_path("deadlines.csv"))
+    deadlines = load_deadlines(get_persistent_path("deadlines.csv"))
     num_rows = len(deadlines)
 
     # Base height for window (buttons, padding, etc.)
@@ -180,7 +191,7 @@ def manage_deadlines_popup():
             )
             return  # Keep popup open for correction
 
-        with open(get_resource_path("deadlines.csv"), "w", newline='', encoding='utf-8') as csvfile:
+        with open(get_persistent_path("deadlines.csv"), "w", newline='', encoding='utf-8') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=["course", "deadline_shamsi", "deadline_time"])
             writer.writeheader()
             for row in valid_rows:
@@ -191,13 +202,9 @@ def manage_deadlines_popup():
 
 
 
-
-
-
-
     # ✅ حالا بخونیم از فایل و add_row بزنیم
     try:
-        with open(get_resource_path("deadlines.csv"), newline='', encoding='utf-8') as csvfile:
+        with open(get_persistent_path("deadlines.csv"), newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 course = row.get('course', '')
@@ -316,7 +323,7 @@ def update_table():
     for widget in frame.winfo_children():
         widget.destroy()
 
-    csv_path = get_resource_path("deadlines.csv")
+    csv_path = get_persistent_path("deadlines.csv")
     deadlines = load_deadlines(csv_path)
     deadlines.sort(key=lambda x: x[3])
 
@@ -338,7 +345,7 @@ def update_table():
 
 # --- Root setup ---
 root = tk.Tk()
-root.title("شمارش معکوس امتحانات")
+root.title("شمارش معکوس ددلاین")
 root.attributes('-topmost', True)
 root.resizable(True, True)
 
