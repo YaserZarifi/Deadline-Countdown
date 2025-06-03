@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Build and Distribution
+build/
+dist/
+*.spec
+
+# Virtual environment
+venv/
+env/
+
+# Secrets
+.env
+
+# Log files
+*.log
+
+# Databases (if local and not to be shared)
+# *.db
+# *.sqlite3
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor-specific (optional, uncomment if you use these editors)
+# .vscode/
+# .idea/
+
+# *.tex
+# *.aux
+# *.lof
+# *.log # (Note: *.log is already included above, good for general logs too)
+# *.lol
+# *.lot
+# *.out
+# *.toc
+# *.synctex.gz
+# *.fls
+# *.fdb_latexmk
+# _minted*
