@@ -20,7 +20,7 @@ env/
 # Log files
 *.log
 
-# Databases (if local and not to be shared)
+# Databases 
 # *.db
 # *.sqlite3
 
@@ -28,14 +28,14 @@ env/
 .DS_Store
 Thumbs.db
 
-# Editor-specific (optional, uncomment if you use these editors)
+# Editor-specific 
 # .vscode/
 # .idea/
 
 # *.tex
 # *.aux
 # *.lof
-# *.log # (Note: *.log is already included above, good for general logs too)
+# *.log # 
 # *.lol
 # *.lot
 # *.out
