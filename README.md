@@ -31,7 +31,7 @@ To get this application up and running on your local machine, follow these steps
 
 1.  **Clone the Repository:**
     ```bash
-    git clone [https://github.com/YaserZarifi/Deadline-Countdown.git]
+    git clone https://github.com/YaserZarifi/Deadline-Countdown.git
     cd Deadline-Countdown
     ```
 
