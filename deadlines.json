@@ -1,7 +1,20 @@
 [
     {
-        "text": "\u0647\u0648\u0634 \u0645\u0635\u0646\u0648\u0639\u064a",
-        "datetime": "2025-05-30T17:40:00",
-        "created": "2025-05-27T16:12:18.967626"
+        "course": "وب",
+        "deadline_shamsi": "1404-03-19",
+        "deadline_time": "02:00:00",
+        "checked": "0"
+    },
+    {
+        "course": "هوش",
+        "deadline_shamsi": "1404-03-21",
+        "deadline_time": "02:00:00",
+        "checked": "0"
+    },
+    {
+        "course": "سيار",
+        "deadline_shamsi": "1404-03-26",
+        "deadline_time": "23:00:00",
+        "checked": "0"
     }
 ]
