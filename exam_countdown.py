@@ -10,7 +10,10 @@ from tkinter import messagebox
 import os
 import sys
 import winreg as reg
-import json # ADDED
+import json 
+
+
+
 
 
 # --- Global variable to hold references to rendered deadline items ---
@@ -49,15 +52,22 @@ def add_to_startup(file_path=None, app_name="DeadlineApp"):
         print(f"Could not add to startup: {e}")
 
 
-def get_persistent_path(filename="deadlines.json"): # Changed default to JSON
+
+def get_persistent_path(filename="deadlines.json"):
     """
-    Returns the path to the JSON file in the project root.
-    Creates an empty JSON file if it doesn't exist.
+    Returns the path to the JSON file stored in the AppData\Local\YourAppName folder.
+    Creates the directory and file if they don't exist.
     """
-    if not os.path.exists(filename):
-        with open(filename, 'w', encoding='utf-8') as f:
-            json.dump([], f)  # Write an empty list to the new file
-    return filename
+    appdata_folder = os.path.join(os.environ['LOCALAPPDATA'], 'DeadlineCountdown')  # Replace with your app name
+    os.makedirs(appdata_folder, exist_ok=True)  # Create folder if needed
+
+    full_path = os.path.join(appdata_folder, filename)
+
+    if not os.path.exists(full_path):
+        with open(full_path, 'w', encoding='utf-8') as f:
+            json.dump([], f)  # Or {} depending on your data structure
+
+    return full_path
 
 
 # --- Notebook Feature ---
@@ -70,12 +80,12 @@ class NotebookWindow(tk.Toplevel):
         self.vazir_font = tkFont.Font(family="Vazir", size=12)
 
         self.current_date = jdatetime.date.today()
-        # Define the single JSON file path for notes
-        self.notes_directory = "notes"
-        self.notes_file = os.path.join(self.notes_directory, "notes.json")
-        
-        # Ensure the 'notes' directory exists
-        os.makedirs(self.notes_directory, exist_ok=True)
+
+        appdata_base = os.path.join(os.environ['LOCALAPPDATA'], 'DeadlineCountdown')  
+        os.makedirs(appdata_base, exist_ok=True)
+
+        self.notes_file = os.path.join(appdata_base, "notes.json")
+
 
         self.save_timer = None # For auto-save mechanism
 
@@ -591,6 +601,20 @@ edit_button.pack(side="right", padx=10)
 # Notebook Button
 notebook_button = tk.Button(buttons_frame, text="یادداشت‌ها", command=open_notebook, font=vazir_font)
 notebook_button.pack(side="left", padx=10)
+
+footer_label = tk.Label(
+    root,
+    text="Built by Yaser. Caffeine levels: dangerously high.",
+    font=("Vazir", 10, "italic"),
+    fg="gray",
+    anchor="center"
+)
+footer_label.pack(side="bottom", fill="x", pady=5)
+
+
+
+
+
 
 
 if __name__ == "__main__":

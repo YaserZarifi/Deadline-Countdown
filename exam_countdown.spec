@@ -5,11 +5,7 @@ a = Analysis(
     ['exam_countdown.py'],
     pathex=[],
     binaries=[],
-    datas = [
-        ('deadlines.csv', '.'),
-        ('Jallai.py', '.'),
-
-    ],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
